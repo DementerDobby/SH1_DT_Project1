@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SH1 홈페이지</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+      integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #wrap {
+        width: 580px;
+        height: 580px;
+        margin: min(50px, 5%) auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #header {
+        width: 400px;
+        height: 380px;
+        background-image: url("/img/SH1.png");
+        background-size: cover; /* 이미지를 컨테이너에 맞게 조정 */
+        background-position: center; /* 이미지의 중앙을 기준으로 배경을 정렬 */
+        margin: auto;
+      }
+
+      #main {
+        background-color: #f0f0f0; /* 회색 배경색 */
+        border-radius: 8px; /* 모서리 둥글게 */
+        padding: 20px;
+        width: 100%;
+      }
+
+      .form-group {
+        display: flex;
+        align-items: center;
+      }
+
+      .form-group label {
+        flex: 1;
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      .form-group input {
+        flex: 2;
+        border: none;
+        border-bottom: 1px solid #ced4da;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .form-group input:focus {
+        border-bottom: 2px solid #007bff;
+      }
+
+      #section {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* 버튼을 가운데 정렬 */
+        margin-left: 20px; /* aside와의 간격 추가 */
+      }
+
+      .btn-custom {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff; /* 버튼 배경색 흰색 */
+        border: 1px solid #ced4da; /* 버튼 테두리 색상 */
+        color: #007bff; /* 버튼 텍스트 색상 */
+        border-radius: 0; /* 버튼 모서리 각진 형태 */
+        font-size: 16px; /* 버튼 텍스트 크기 */
+        padding: 10px; /* 버튼 패딩 */
+      }
+
+      .btn-custom:hover {
+        background-color: #e9ecef; /* 버튼 hover 시 색상 */
+      }
+
+      .btn-secondary {
+        background-color: #6c757d; /* 비밀번호 찾기 버튼 색상 */
+        border: none; /* 테두리 없애기 */
+        font-size: 16px; /* 버튼 텍스트 크기 */
+        padding: 10px 16px; /* 버튼 패딩 */
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268; /* 비밀번호 찾기 버튼 hover 색상 */
+      }
+
+      .form-check-container {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* 체크박스와 라벨 사이 간격 */
+        padding: 10px 16px; /* 버튼처럼 보이도록 padding 설정 */
+        border: 1px solid #6c757d; /* 버튼과 같은 테두리 색상 설정 */
+        border-radius: 4px; /* 버튼과 같은 border-radius 설정 */
+        background-color: #6c757d; /* 버튼과 같은 배경색 설정 */
+        color: #fff; /* 버튼과 같은 텍스트 색상 설정 */
+        cursor: pointer; /* 클릭 가능한 버튼처럼 보이도록 설정 */
+        font-size: 16px; /* 폰트 크기 */
+      }
+
+      .form-check-input {
+        margin: 0;
+      }
+
+      .form-check-label {
+        margin-bottom: 0; /* 라벨의 기본 margin 제거 */
+        cursor: pointer; /* 클릭 가능한 버튼처럼 보이도록 설정 */
+      }
+
+      .form-check-container:hover {
+        background-color: #5a6268; /* hover 시 색상 변경 */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap" class="container-fluid p-4">
+      <div id="header"></div>
+      <div id="main" class="row col-12 d-flex">
+        <div class="d-flex col-12">
+          <div id="aside" class="col-8">
+            <div class="row g-3 align-items-center">
+              <div class="col-12">
+                <div class="form-group mb-3">
+                  <label for="inputId">ID</label>
+                  <input
+                    type="text"
+                    id="inputId"
+                    class="form-control"
+                    aria-describedby="idHelpInline"
+                  />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group mb-3">
+                  <label for="inputPassword">Password</label>
+                  <input
+                    type="password"
+                    id="inputPassword"
+                    class="form-control"
+                    aria-describedby="passwordHelpInline"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="section" class="col-4">
+            <button type="button" class="btn btn-custom">로그인</button>
+          </div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center gap-3 mt-3"
+        >
+          <button type="button" class="btn btn-secondary">비밀번호 찾기</button>
+          <div class="form-check-container">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              관리자로 로그인하기
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
