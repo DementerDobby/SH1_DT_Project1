@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>선종별 방법 비율 및 사유설명 코드 시각화</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <style>
+      .chart-container {
+        width: 400px; /* 원하는 너비 */
+        height: 400px; /* 원하는 높이 */
+        display: inline-block; /* 그래프를 가로로 나열 */
+        margin-right: 20px; /* 그래프 사이의 간격 */
+      }
+      .charts-wrapper {
+        display: flex; /* 가로로 나열 */
+        flex-wrap: wrap; /* 줄바꿈 허용 */
+        justify-content: center; /* 가운데 정렬 */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>용접 방법 비율 시각화</h1>
+    <input type="file" id="fileInput" />
+    <div class="charts-wrapper">
+      <div class="chart-container">
+        <canvas id="methodChart"></canvas>
+        <p>선종 비율</p>
+      </div>
+      <div class="chart-container">
+        <canvas id="reasonChart"></canvas>
+        <p>선종별 용접방법별 불량 건수 비율</p>
+      </div>
+      <div class="chart-container">
+        <canvas id="reason2Chart"></canvas>
+        <p>선종별 사유코드 비율</p>
+      </div>
+    </div>
+    <script src="script3.js"></script>
+  </body>
+</html>
