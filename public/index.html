@@ -17,33 +17,75 @@
         .then((data) => {
           console.log(data.length);
 
-          const labels = data.map((item) => item.원인코드); //바꿀꺼
-          const counts = data.map((item) => item.count); //바꿀꺼
+          const labels = data.map((item) => item.설계기능); //바꿀꺼
+          const counts = data.map(
+            (item) => item.도면종류_리스트.split(", ").length
+          ); //바꿀꺼
 
           drawChart(labels, counts);
         });
 
       function drawChart(labels, counts) {
-        // Chart.js로 막대 그래프 그리기
+        // Chart.js로 그래프 그리기
         const ctx = document.getElementById("myChart").getContext("2d");
         const myChart = new Chart(ctx, {
           type: "bar", // 막대 그래프(바꿀꺼)
           data: {
-            labels: labels, // 근원부서명
+            labels: labels, // 설계기능
             datasets: [
               {
-                label: "근원부서별 데이터 갯수", //바꿀꺼
+                label: "근원부서별 데이터 갯수", //바꿀꺼 (데이터 설명)
                 data: counts, // 각 근원부서의 데이터 갯수
-                backgroundColor: "rgba(54, 162, 235, 0.2)", //바꿀꺼
-                borderColor: "rgba(54, 162, 235, 1)", //바꿀꺼
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 205, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 205, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
                 borderWidth: 1,
               },
             ],
           },
           options: {
+            responsive: true,
             scales: {
+              x: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "설계기능",
+                },
+              },
               y: {
                 beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "도면종류 개수",
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (tooltipItem) {
+                    const label = tooltipItem.label || "";
+                    const value = tooltipItem.raw || 0;
+                    return `${label}: ${value} 개`;
+                  },
+                },
               },
             },
           },

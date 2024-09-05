@@ -15,8 +15,17 @@ const connection = mysql.createConnection({
 });
 
 app.get("/data", (req, res) => {
-  const query =
-    "SELECT 근원부서 AS 원인코드, COUNT(*) AS count FROM one_line GROUP BY 근원부서"; //바꿀꺼
+  const query = `
+    SELECT 
+        설계기능,
+        GROUP_CONCAT(DISTINCT 도면종류 ORDER BY 도면종류 SEPARATOR ', ') AS 도면종류_리스트
+    FROM 
+        three_line
+    GROUP BY 
+        설계기능
+    ORDER BY 
+        설계기능;
+`; //바꿀꺼
 
   connection.query(query, (error, results) => {
     if (error) {
