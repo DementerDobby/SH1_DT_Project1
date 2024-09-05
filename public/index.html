@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>근원부서별 데이터 시각화</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>근원부서별 데이터 카운트</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+      // 서버에서 '/data' API를 통해 데이터 가져오기
+      fetch("http://localhost:3000/data")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.length);
+
+          const labels = data.map((item) => item.원인코드); //바꿀꺼
+          const counts = data.map((item) => item.count); //바꿀꺼
+
+          drawChart(labels, counts);
+        });
+
+      function drawChart(labels, counts) {
+        // Chart.js로 막대 그래프 그리기
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx, {
+          type: "bar", // 막대 그래프(바꿀꺼)
+          data: {
+            labels: labels, // 근원부서명
+            datasets: [
+              {
+                label: "근원부서별 데이터 갯수", //바꿀꺼
+                data: counts, // 각 근원부서의 데이터 갯수
+                backgroundColor: "rgba(54, 162, 235, 0.2)", //바꿀꺼
+                borderColor: "rgba(54, 162, 235, 1)", //바꿀꺼
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
