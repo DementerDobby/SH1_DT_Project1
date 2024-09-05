@@ -64,7 +64,7 @@ document
             operator,
             average: sum / count,
           }))
-          .filter(({ average }) => average > 0) // 0 이하 제외
+          .filter(({ average }) => average > 1) // 1 이하 제외
           .sort((a, b) => b.average - a.average); // 내림차순 정렬
 
         const operatorLabels = operatorAverages.map(({ operator }) => operator);
