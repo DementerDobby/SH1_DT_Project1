@@ -3,56 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>근원부서별 데이터 시각화</title>
+    <title>월별 계획 수량 및 실적 수량</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <h1>근원부서별 데이터 카운트</h1>
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <h1>월별 계획 수량 및 실적 수량</h1>
+    <canvas id="myChart" width="600" height="400"></canvas>
 
     <script>
       // 서버에서 '/data' API를 통해 데이터 가져오기
       fetch("http://localhost:3000/data")
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.length);
+          // 데이터 가공: 년도와 월을 기반으로 계획 수량과 실적 수량을 추출
+          const labels = data.map(
+            (item) => `${item.년도}-${item.월.toString().padStart(2, "0")}`
+          );
+          const planData = data.map((item) => item.총계획수량 || 0); // 기본값 추가
+          const actualData = data.map((item) => item.총실적수량 || 0); // 기본값 추가
 
-          const labels = data.map((item) => item.설계기능); //바꿀꺼
-          const counts = data.map(
-            (item) => item.도면종류_리스트.split(", ").length
-          ); //바꿀꺼
-
-          drawChart(labels, counts);
+          // 그래프 그리기
+          drawChart(labels, planData, actualData);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
 
-      function drawChart(labels, counts) {
-        // Chart.js로 그래프 그리기
+      function drawChart(labels, planData, actualData) {
         const ctx = document.getElementById("myChart").getContext("2d");
+
         const myChart = new Chart(ctx, {
-          type: "bar", // 막대 그래프(바꿀꺼)
+          type: "line",
           data: {
-            labels: labels, // 설계기능
+            labels: labels, // 월별 레이블
             datasets: [
               {
-                label: "근원부서별 데이터 갯수", //바꿀꺼 (데이터 설명)
-                data: counts, // 각 근원부서의 데이터 갯수
-                backgroundColor: [
-                  "rgba(255, 99, 132, 0.2)",
-                  "rgba(54, 162, 235, 0.2)",
-                  "rgba(255, 205, 86, 0.2)",
-                  "rgba(75, 192, 192, 0.2)",
-                  "rgba(153, 102, 255, 0.2)",
-                  "rgba(255, 159, 64, 0.2)",
-                ],
-                borderColor: [
-                  "rgba(255, 99, 132, 1)",
-                  "rgba(54, 162, 235, 1)",
-                  "rgba(255, 205, 86, 1)",
-                  "rgba(75, 192, 192, 1)",
-                  "rgba(153, 102, 255, 1)",
-                  "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
+                label: "계획 수량",
+                data: planData, // 계획 수량 데이터
+                borderColor: "rgba(54, 162, 235, 1)",
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                fill: false, // 선 아래를 채우지 않음
+                tension: 0.1, // 선의 곡률 조정
+              },
+              {
+                label: "실적 수량",
+                data: actualData, // 실적 수량 데이터
+                borderColor: "rgba(255, 99, 132, 1)",
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                fill: false, // 선 아래를 채우지 않음
+                tension: 0.1, // 선의 곡률 조정
               },
             ],
           },
@@ -60,17 +59,18 @@
             responsive: true,
             scales: {
               x: {
-                beginAtZero: true,
                 title: {
                   display: true,
-                  text: "설계기능",
+                  text: "월",
                 },
               },
               y: {
-                beginAtZero: true,
                 title: {
                   display: true,
-                  text: "도면종류 개수",
+                  text: "수량",
+                },
+                ticks: {
+                  beginAtZero: true,
                 },
               },
             },
@@ -81,7 +81,7 @@
               tooltip: {
                 callbacks: {
                   label: function (tooltipItem) {
-                    const label = tooltipItem.label || "";
+                    const label = tooltipItem.dataset.label || "";
                     const value = tooltipItem.raw || 0;
                     return `${label}: ${value} 개`;
                   },
