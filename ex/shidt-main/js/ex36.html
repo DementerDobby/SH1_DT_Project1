@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>키-밸류 객체</title>
+    <script>
+        //Key-Value Object = 객체
+        //key는 반드시 문자열, value는 다양한 타입(number, string, object, func )
+        //map, dictionary( key : value ), JSON/XML
+        // 프론트엔드(html/css/js, react.js) <=> HTTP(JSON) <=> 백엔드(node.js)
+        let keyValue = {
+            apple : 1000,
+            banana : 2000,
+            pear : 3000
+        };
+        console.log( keyValue['apple'] );
+        console.log( keyValue.apple );
+
+        let person = {
+            name : '홍길동',
+            action : () => { console.log("야호~"); }
+        }
+        console.log( person.name );
+        person.action();
+
+        //연습문제
+        // student KV객체를 선언하고,
+        // 이 학생의 국어, 영어, 수학 성적을 각각 70, 80,90으로 설정하고,
+        // 합산과 평균을 내는 익명함수를 각각 sum, avr로 설정하고,
+        // 익명함수를 통해, sum과 avr값을 출력하시오.
+        // 그리고 국어,영어,수학 점수도 각각 출력하시오.
+        let student = {
+            kor : 70,
+            eng : 80,
+            math : 90,
+            //sum : (a, b, c) => { return a + b + c },
+            sum : (a, b, c) => a + b + c,
+            avr : (a, b, c) => (a + b + c) / 3
+        };
+        console.log( student.kor );
+        console.log( student.eng );
+        console.log( student.math );
+        console.log( student.sum( student.kor, student.eng, student.math) );
+        console.log( student.avr( student.kor, student.eng, student.math) );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

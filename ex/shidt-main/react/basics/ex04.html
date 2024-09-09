@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSX를 이용하여 html만들기</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <!-- JSX문법을 JS로 변환시켜주는 js -->
+    <!-- min : 용량을 줄이기 위해서 공백,줄바꿈을 없앰. -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <p>JSX를 이용하여 html만들기</p>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+      //리액트 함수 컴포넌트 정의
+      function Greeting() {
+        return (
+          //JSX를 활용한 예 : 문법은 HTML과 유사하지만 JS문법으로 변환된다.(바벨.js)
+          <h1 className="greeting">Hello World~</h1>
+        );
+      }
+
+      //JSX를 함수형변수(익명함수)로 정의
+      const elementH1 = <h1 className="greeting">Hello World~111</h1>;
+
+      //ReactDOM을 이용하여 컴포넌트를 root에 렌더링
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      //함수 컴포넌트 Render
+      //root.render(React.createElement(Greeting));
+      //함수형변수 Render
+      root.render(elementH1);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>문서객체 선택하는 방법</title>
+    <script>
+        //문서 객체 모델(Document Object Model)
+        // 웹브라우저가 html문서를 로딩(분석)한 후에
+        // 트리모양으로 관리하는 데이터 구조 또는 객체
+
+        //문서객체를 선택하는 방법
+        //1. 아이디로 선택 : getElementById()
+        //2. 클래스로 선택 : getElementsClassName()
+        //3. 태그로 선택 : getElementsByTabName()
+        //4. css선택자로 선택 : querySelector( css선택자 )
+        //                   querySelectorAll( css선택자 )
+
+        // 웹브라우저가 html문서를 로딩(분석)한 후에 호출
+        window.onload = () => {
+            let h1 = document.getElementById("header1");
+            h1.innerHTML = "찾음!";
+            
+            let arrayH2 = document.getElementsByClassName('header-h2');
+            console.log( arrayH2 );
+            for( let h2 of arrayH2 ){
+                h2.innerHTML = "찾음!";
+            }
+
+            let arrayP = document.getElementsByTagName('p');
+            console.log( arrayP );
+            for( let p of arrayP){
+                p.innerText = "찾음!";
+            }
+
+            let h1_2 = document.querySelector('#header2');
+            h1_2.innerHTML = "찾음!";
+
+            let arrayH2_2 = document.querySelectorAll('.header-h2');
+            console.log( arrayH2_2 );
+
+        };
+    </script>
+</head>
+<body>
+    <h1 id="header1">제목태그 1</h1>
+    <h1 id="header2">제목태그 2</h1>
+    <h2 class="header-h2">제목태그 3</h2>
+    <h2 class="header-h2">제목태그 4</h2>
+    <h2 class="header-h2">제목태그 5</h2>
+    <p>문단태그 p</p>
+    <p>문단태그 p</p>
+    <p>문단태그 p</p>
+
+    <script> 
+
+    </script>
+</body>
+</html>

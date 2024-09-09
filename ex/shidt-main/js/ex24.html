@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>반복문-조건문 연습문제</title>
+    <script>
+        //반복문 안에 조건문이 들어간다.
+        for(let i=0; i<100; i++){
+            if( i%2 == 0 ){
+                console.log(i);//0~99 => 짝수일 경우만
+            }
+        }
+        //연습문제
+        //1. 1부터 100까지의 합을 출력하시오. 5050
+        
+        let sum = 0;
+        for(let i=1; i<101; i++){
+            //sum = sum + n;
+            sum = sum + i;
+        }
+        console.log( sum );
+
+        //2. 1부터 100사이의 3의 배수의 갯수를 출력
+        for(let i=1; i<101; i++){
+            if( i%3 == 0 ){
+                console.log( i );
+            }
+        }
+        //3. 1~10사이의 랜덤수를 10번 발생시켜,
+        //   그중에 가장 큰수(max)와 가장 작은 수(min)을 출력하시오.
+        let max = Number.MIN_SAFE_INTEGER;//최소값 정수값의 최소값
+        let min = Number.MAX_SAFE_INTEGER;
+        for(let i=0; i<10; i++){ //10번 반복
+            let rand = Math.floor(Math.random() * 10 )+1;
+            console.log(rand);
+            if( max < rand ){
+                max = rand;
+            }
+            if( min > rand ){
+                min = rand;
+            }
+        }
+        console.log("max:"+max);
+        console.log("min:"+min);
+
+        //4. 이중반복문 1부터 100사이의 소수를 출력하시오.
+        // 소수 : 약수가 1과 자신인 수
+        // 약수 : 나누어 떨어지는 수
+        // 10의 약수 : 1, 10, 2, 5
+        // 7의 약수 : 1, 7
+
+        //약수의 갯수 구하기
+        //10의 약수의 갯수는 4이다. 
+        // let yaksu = 0;
+        // for(let j=1; j <= 10; j++){
+        //     if( 10 % j == 0 ){
+        //         yaksu ++;
+        //     }
+        // }
+        // console.log( yaksu );
+
+        for(let i=1; i<101; i++){
+            let yaksu = 0;
+            for(let j=1; j <= i; j++){
+                if( i % j == 0 ){
+                    yaksu ++;
+                }
+            }
+            //console.log( yaksu );
+            if( yaksu == 2){
+                //소수이다.
+                console.log( "소수: "+ i);
+            }
+        }
+        
+        //5. 배열 사용, 로또번호 6개(1~45)를 추첨하되 
+        //  중복된 수를 추첨하면, 재추첨하는 로직을 넣으시오.
+        //  로또번호 6개를 출력하시오.
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

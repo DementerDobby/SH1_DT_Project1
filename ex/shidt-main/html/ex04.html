@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- 문자인코딩 타입 - UTF-8 유니코드 -->
+    <meta charset="UTF-8" />
+    <!-- 모바일 화면에서 LCD액정 전체 사이즈를 화면크기로 만들기 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML 태그 종합</title>
+  </head>
+  <body>
+    HTML 태그의 종류 <br />
+    <!-- 줄바꿈  -->
+    줄바꿈전<br />
+    줄바꿈후
+    <!-- 수평줄 -->
+    <hr />
+    <!-- 문단 -->
+    <p>문단태그입니다.</p>
+    <!-- 제목 -->
+    <h1>제목태그 H1~H6</h1>
+    <!-- 앵커(닷) 하이퍼링크 바로가기 태그 (GET식 호출) -->
+    <a href="http://www.daum.net">다음닷컴</a>
+    <!-- ul, ol, li -->
+    <ul>
+      <li>글번호 없음.</li>
+    </ul>
+    <ol>
+      <li>글번호 있음.</li>
+    </ol>
+    <!-- table, tr(row), th(head), td(data) 격자모양의 콘텐츠 표시할 때 -->
+    <table border="1">
+      <tr>
+        <th>제목</th>
+      </tr>
+      <tr>
+        <td>데이터</td>
+      </tr>
+    </table>
+    <!-- img태그 : 이미지 표시 -->
+    <img src="image1.jpg" width="100" alt="대체문구" />
+    <!-- 폼태그/입력 태그 : 서버에 데이터 전송 용도 -->
+    <form action="URL" method="GET">
+      <input type="text" />
+      <input type="submit" value="제출" />
+    </form>
+    <!-- 공간분할 태그 div, span -->
+    <!-- div : 줄바꿈됨. -->
+    <!-- span : 줄바꿈 안됨. -->
+    <div>더미문구입니다.</div>
+    <div>더미문구입니다.</div>
+    <span>더미문구입니다.</span>
+    <span>더미문구입니다.</span>
+    <!-- block속성 : 줄바꿈됨 -->
+    <!-- div h1~h6 p hr table ol ul li form -->
+    <!-- inline속성 : 줄바꿈안됨 -->
+    <!-- span a input label text속성(b,small,i...) img select -->
+    <h1>제목태그 H1</h1>
+    <p>문단태그</p>
+    <a href="">바로가기</a>
+    <i>이태릭 태그</i>
+    <input type="text" />
+    <!-- 시멘틱(의미론적) 태그 -->
+    <!-- *-----------------* -->
+    <!-- |   Header(Top)   | -->
+    <!-- *-----------------* -->
+    <!-- |        Nav      | -->
+    <!-- *-----------------*      -->
+    <!-- |      |          |      -->
+    <!-- |Aside | Section  | Main -->
+    <!-- |      |          |      -->
+    <!-- *-----------------* -->
+    <!-- |      Footer     | -->
+    <!-- *-----------------* -->
+    <!-- div와 동일한 기능을 하면서 이름만 바꾼것 -->
+    <header></header>
+    <nav></nav>
+    <aside></aside>
+    <section></section>
+    <main></main>
+    <footer></footer>
+  </body>
+</html>

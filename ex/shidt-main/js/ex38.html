@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>map함수</title>
+    <script>
+        let arr = [10,20,30,40,50];
+        //전체 요소 순환
+        for(let i=0; i<arr.length; i++){
+            console.log( arr[i] );
+        }
+        for(let item of arr){
+            console.log( item );
+        }
+        arr.forEach( (value, index, array) => {
+            console.log( value );
+            console.log( index );
+            console.log( array );
+        });
+        //map(지도) : 데이터 새로 생성하는 용도
+        arr.map( (item, index, array) => {
+            console.log( item );
+            console.log( index );
+            console.log( array );
+        } );
+
+        let sqrt = arr.map( Math.sqrt ); //배열을 제곱근으로 변환
+        console.log( sqrt );
+        let strings = arr.map( String );
+        console.log(strings);
+        let nums = strings.map( Number );
+        console.log(nums);
+        let doubles = nums.map( (item) => { return item*2; } );
+        console.log(doubles);
+        let doubles2 = nums.map( number => number*2 );
+        console.log(doubles2);
+
+        let students = [ //객체 배열(리스트)
+            {id: 1, name: "hong" },
+            {id: 2, name: "lee" },
+            {id: 3, name: "jung" },
+            {id: 4, name: "kim" }
+        ];
+        //객체배열에서 이름만 가져와서 문자열 1차배열로 만들기
+        let names = students.map( student => student.name );
+        console.log( names );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

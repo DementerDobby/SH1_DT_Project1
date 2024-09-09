@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>조건문</title>
+    <script>
+        // 조건문 : 조건식에 따라 선택적인 수행을 해주는 문장
+        //       : if문 switch문(정수값)
+        //         70%   30%
+
+        //if문 형식
+        // if (조건식) {
+        //    조건식이 true일 때 수행되는 수행문
+        // }
+        if( 10 < 20 ){
+            document.write("10이 20보다 작음.");
+        }
+        if( 10 == 20 ){
+            document.write("10이 20과 같음.");
+        }
+        //문자열 비교
+        // == : 값이 같은가?
+        // === : 값과 타입이 같은가?
+        let str = "자바스크립트";
+        if( str == "자바스크립트" ){
+            document.write("자바스크립트와 같음");
+        }
+        if( str === "자바스크립트" ){
+            document.write("자바스크립트와 같음");
+        }
+
+        //연습문제 - DM으로 제출하시오.
+        //1. 10이 2의 배수이면 "2의 배수입니다"라고 출력하시오.
+        if( 10%2 == 0 ){
+            document.write("2의 배수입니다.<br>");
+        }
+        //2. 10이 3의 배수이면 "3의 배수입니다."라고 출력하시오.
+        if( 10%3 == 0 ){
+            document.write("3의 배수입니다.<br>");
+        }
+        //3. prompt함수로 '홍길동'을 입력받고, 입력받은 문자열이
+        //   '홍길동'이면 "홍길동입니다"라고 출력하시오.
+        let name = prompt("이름은?");
+        if( name == '홍길동'){
+            document.write("홍길동입니다.<br>");
+        }
+        //4. prompt함수로 5자리 숫자를 문자열로 입력받고
+        //   이 안에 홀수의 갯수를 출력하시오.   
+        //   예) "13234" 라면 홀수의 갯수는 3입니다. 라고 출력하시오.
+        //    for문 사용가능, 또는 5번 검사 
+        let numstr = prompt("5자리 숫자");
+        //문자열 : 인덱스가 있음 numstr[0] numstr[1] .length 길이
+        let count = 0;
+        if( numstr[0]%2 == 1 ){
+            count++;
+        }
+        if( numstr[1]%2 == 1 ){
+            count++;
+        }
+        if( numstr[2]%2 == 1 ){
+            count++;
+        }
+        if( numstr[3]%2 == 1 ){
+            count++;
+        }
+        if( numstr[4]%2 == 1 ){
+            count++;
+        }
+        document.write(`홀수의 갯수는 ${ count}입니다.`);
+            
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

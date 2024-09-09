@@ -1,0 +1,16 @@
+리액트 실습용 미니블로그 만들기
+
+기능
+1. 글목록 보기 - 리스트
+2. 글 보기
+3. 댓글 보기
+4. 글 작성
+5. 댓글 작성
+
+필요한 패키지(모듈) 
+1. react, react-dom : 이미 설치됨.
+2. react-router-dom, styled-components
+npm i react-router-dom, styled-components
+
+폴더 구성
+src > components > list폴더, page폴더, ui폴더 3개

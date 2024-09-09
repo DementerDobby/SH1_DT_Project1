@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>페이지 이동 - 리다이렉션</title>
+    <script>
+        //페이지 이동
+        //1. 리다이렉트 - 사이트간의 이동, 내부데이터를 버리고 이동.
+        //2. 포워드 - 내부 페이지간의 이동, 내부데이터를 가지고 이동.
+
+        //리다이렉트 2가지
+        //1. JS location 객체로 이동
+        //2. a태그로 이동
+
+        //  setTimeout( () =>{ 
+        //      location.href = "http://www.daum.net";
+        //  } , 3000);
+    </script>
+
+</head>
+<body>
+    <a href="http://www.github.com">깃허브</a>
+    
+    <!-- 버튼의 기본타입은 submit -->
+    <form action="http://mysite.com" method="post">
+        <button>유튜브 서브밋</button>
+        <button type="submit">유튜브 서브밋</button>
+        <button type="button" 
+            onclick="location.href='http://www.youtube.com';">유튜브 버튼</button>
+    </form>
+    
+
+    
+</body>
+</html>

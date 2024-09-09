@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>컴포넌트에 상태 값 관리하기(useState 훅 이용하기)</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <p>컴포넌트에 상태 값 관리하기(useState 훅 이용하기) - JSX사용</p>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+      //함수형 컴퍼넌트 정의
+      function MyButton() {
+        //     상태변수     설정함수                        초기값
+        const [isClicked, setIsClicked] = React.useState(false);
+        return (
+          // JSX(리액트파일)에서 JS코드가 들어갈 때 중괄호 안에 넣는다.
+          <button onClick={() => setIsClicked(true)}>
+            {isClicked ? "Clicked!" : "Click Here!"}
+          </button>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<MyButton />);
+    </script>
+  </body>
+</html>

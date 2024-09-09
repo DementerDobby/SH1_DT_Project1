@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>자바스크립트 개요</title>
+    <!-- html 주석문 CTRL + / -->
+    <!-- java script 공식 명칭 : ECMA Script -->
+    <!-- 만든사람 : 썬마이크로 시스템즈 + 넷스케이프 브랜든 아이크  -->
+    <!-- java 언어와 java script는 전혀 다른 언어 -->
+    <!-- ES6 버전에서 문법이 완성이 됨. -->
+    <!-- html 웹브라우저에서 실행되는 유일한 언어 -->
+
+    <!-- js를 구동시키는 방법 -->
+    <!-- 1. 웹브라우저(크롬,엣지,사파리)에서 html안에서 구동 -->
+    <!-- 2. node.js(v8엔진) 으로 구동 -->
+    <!--    1) 백엔드 - 서버pc - express  -->
+    <!--    2) 프론트엔드 - 뷰템플릿 - 리액트.js Vue.js 앵귤러.js  -->
+
+    <!-- html안에서 js의 역할 -->
+    <!-- 동적인 웹을 만드는 역할 -->
+    <!-- 1. 사용자의 동작(클릭, 스크롤, 입력 등) -->
+    <!-- 2. 서버와 직접 통신 - AJAX 통신 - 데이터의 갱신 -->
+
+    <!-- JS 선언하는 방법 -->
+    <!-- 1. <script>태그 안에서 : head태그, body태그 안에서 -->
+    <!-- 2. html 요소 태그안에서 속성으로 : onclick, href -->
+    <!-- 3. 별도의 .js파일을 import해서 사용 -->
+    <script>
+        console.log("hello js1");
+    </script> 
+    <script src="./func.js"></script>
+</head>
+<body>
+    
+    <h1>Hello JS!</h1>
+    <a href="javascript:alert('클릭하셨어요?')">클릭하세요!</a> <br>
+    <button onclick="alert('또 클릭하셨어요?')">클릭하세요!</button> <br>
+    <br>
+    <img src="apple.png" alt="사과"
+         width="100" height="100" 
+         onmouseover="this.src='banana.png'"
+         onmouseout="this.src='apple.png'"
+         >
+
+    <script>
+        console.log("hello js2");
+    </script>
+</body>
+</html>

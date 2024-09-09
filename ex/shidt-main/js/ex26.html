@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>배열 array</title>
+    <script>
+        // 배열 : 같은 타입의 데이터를 순차적으로 나열해 놓은 데이터 구조
+        // 용도 : 대량의 데이터를 조작하기 위해서 사용. 
+        // 램(RAM)
+        //  0x1000 *------*  인덱스
+        //         |  10  |   0
+        //  0x1003 *------*
+        //         |  20  |   1
+        //  0x1007 *------*
+        //         |  30  |   2
+        //         *------*
+
+        //배열 선언 형식
+        // let 배열이름 = [ 데이터1, 데이터2, 데이터3 ];  
+        // let 배열이름 = [ ];  빈 배열
+        let arrayNums = [ 10, 20, 30 ];
+        //let arrNums
+        //let nums
+        //let array_nums
+
+        console.log( arrayNums[0] );
+        console.log( arrayNums[1] );
+        console.log( arrayNums[2] );
+
+        for(let i=0; i<3; i++){
+            console.log( arrayNums[ i ] );
+        }
+        //배열의 길이
+        console.log( arrayNums.length );
+        for(let i=0; i<arrayNums.length; i++){
+            console.log( arrayNums[ i ] );
+        }
+        
+        //향상된 for문 - 데이터 요소(item)를 직접 가져온다.
+        for( let num of arrayNums ){
+            console.log( num );
+        }
+        //forEach문
+        arrayNums.forEach(
+            //익명함수
+            function( num ) {
+                console.log( num );
+            }
+        );
+        arrayNums.forEach(
+            //익명함수 - 화살표함수
+            ( num ) => {
+                console.log( num );
+            }
+        );
+        //연습문제 - DM제출
+        let names = ["장미", "수선화", "천일홍"];
+        //1. for문의 반복변수 i를 이용하여 배열의 모든 요소를 출력하시오.
+        for(let i=0; i<names.length; i++){
+            console.log( names[i] );
+        }
+        //2. for of문을 이용하여 출력하시오.
+        for( let name of names ){
+            console.log( name );
+        }
+        //3. for of문으로 전체 출력하되, 문자열 길이가 2인 요소는 출력 제외.
+        for( let name of names ){
+            if( name.length == 2 ){
+                continue;
+            }
+            console.log( name );
+        }
+        //4. forEach문을 이용하여 전체 출력하시오.
+        //   일반함수, 화살표 함수 모두 사용해 보시오.
+        names.forEach(
+            function(name){
+                console.log( name );
+            }
+        );
+        names.forEach(
+            (name) => {
+                console.log( name );
+            }
+        );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+

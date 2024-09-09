@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>switch 연습문제</title>
+    <script>
+        //랜덤수 발생시키기 Math.random()함수
+        // random()는 0.0 ~ 0.9999.... 까지의 임의의 실수를 반환
+        console.log( Math.random() );
+        // 0~9까지의 랜덤한 수
+        console.log( Math.floor( Math.random() * 10) );//0.0~9.999....
+        // 1~100까지의 랜덤수
+        console.log( Math.floor( Math.random() * 100)+1 );//0~99 => 1~100
+
+        //이상 : num >= 10
+        //이하 : num <= 10
+        //초과 : num > 10
+        //미만 : num < 10
+
+        //연습문제 - DM제출
+        //1.
+        //1부터 100사이의 랜덤수를 발생시켜 출력하고
+        //이 수가 80이상이면, "80이상입니다."
+        //60이상이면 "60이상입니다."
+        //40이상이면 "40이상입니다."
+        //그외의 수이면 "그외의 수입니다." 라고 출력하시오.
+        let randNum = Math.floor( Math.random() * 100)+1;
+        if( randNum >= 80 ){
+            console.log("80이상입니다.");
+        }else if( randNum >= 60 ){
+            console.log("60이상입니다.");
+        }else if( randNum >= 40 ){
+            console.log("40이상입니다.");
+        }else{
+            console.log("그외의 수입니다.");
+        }
+        console.log( "randNum:"+randNum);
+        let num2 = parseInt(randNum/20);
+        switch(num2){
+            case 4: 
+                console.log("80이상입니다.");
+                break;
+            case 3:
+                console.log("60이상입니다.");
+                break;
+            case 2:
+                console.log("40이상입니다.");
+                break;
+            default:
+                console.log("그외의 수입니다.");
+                break;
+        }
+        //2.
+        //주사위(1~6)를 2개 던져서, 주사위 눈의 수 2개의 합을 구해서 출력하고
+        //그 수가 홀수이면,  "홀수입니다."
+        //짝수이면 "짝수입니다."
+        let dice1 = Math.floor(Math.random() * 6) + 1; //1~6
+        console.log( dice1 );
+        let dice2 = Math.floor(Math.random() * 6) + 1;
+        let sum = dice1 + dice2;
+        console.log(sum);
+        switch( sum%2 ) {
+            case 0:
+                console.log("짝수입니다.");
+                break;
+            case 1:
+                console.log("홀수입니다.");
+                break;  
+        }
+        if( sum%2 == 0 ){
+            console.log("짝수입니다.");
+        }else{
+            console.log("홀수입니다.");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

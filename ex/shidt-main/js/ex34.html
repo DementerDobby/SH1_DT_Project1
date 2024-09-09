@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>함수의 중급기법</title>
+    <script>
+        //프로그래밍 언어의 세대별 특징
+        //1세대 언어: 절차적 언어: C언어/베이직/어셈블리어/포트란/코볼
+        //2세대 언어: 객체지향 언어: 자바/C#/C++/Objective-C
+        //3세대 언어: 함수형 언어: JS/파이썬/Go/Swift/Kortlin/Rust
+
+        //객체지향(Object Oriented) : 재사용성(중복제거,설계형)
+        //객체 - 사물/물건/things - 클래스(함수 + 변수)
+        //함수형 - 코드블럭 - 매개변수로 전달 : 비동기적 처리(UI, 통신) 용이
+
+        //일반함수
+        function myFunc( num ) {
+           console.log("myFunc 호출됨.");  
+           console.log( num );
+        }
+        myFunc( 10 );
+        
+        //함수의 매개변수로 코드뭉치(함수-익명함수)를 전달해보자!
+        //전달된 코드를 실행할 수 있고, 또 전달할 수 있다.
+        //비동기적 처리( 코드를 선언하는 시점과 실행되는 시점이 다른 것)에 용이
+
+        //함수형 변수 선언 - 코드블럭을 변수처럼 선언한 것
+        let funcVar = function() {
+            console.log("funcVar 호출됨.");
+        };
+        funcVar();
+
+        //매개변수와 반환형이 있는 함수형 변수
+        let funcVar2 = function( param ){
+            console.log("funcVar2 호출됨.");
+            return param + "!!";
+        };
+        let result = funcVar2( "자바스크립트" );
+        console.log( result );
+
+        //ES6부터는 화살표연산자 함수를 지원
+        let funcVar3 = (param) => {
+            console.log("funcVar3 호출됨.");
+            return param + "##";
+        };
+        let result2 = funcVar3( "ECMA Script" );
+        console.log( result2 );
+
+        //일반함수에 함수형변수(익명함수)를 전달해보자.
+        function sum( param1, param2, method){ //p1와 p2를 더한 결과를 반환
+            return method( param1, param2 );
+        }
+        let sumFunc = (a, b) => {
+            return a + b;
+        };
+        console.log( sum( 10, 20, sumFunc) );
+
+        //연습문제 
+        //함수형변수 funcMax를 선언하고,
+        //매개변수 정수 2개을 받아서, 더 큰수를 반환한다.
+        //일반함수 max를 선언하고, 매개변수 2개는 정수로, 나머지 1개는 함수형변수로
+        //로 입력받고, 결과를 출력하시오.
+        let funcMax = (p1, p2) => {
+            if(p1>p2)
+                return p1;
+            else 
+                return p2;
+            //return p1>p2 ? p1 : p2 ;
+        };
+        function max( p1, p2, method){
+            return method(p1, p2);
+        }
+        console.log( max(10, 20, funcMax) );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>연산자 연습문제</title>
+    <script>
+        //연습문제 - DM으로 제출해주세요~
+        //1. 비교연산자 : > < == != <= >=
+        //  1) 20은 30보다 작은지 true/false로 출력하시오.
+        console.log( 20 < 30 );
+        //  2) 20은 30보다 작거나 같은지 true/false로 출력하시오.
+        console.log( 20 <= 30 );
+        //2. 논리연산자 : AND(&&) OR(||) NOT(!)
+        // 1) 10은 20보다 작으면서(~이고), 10은 5보다 큰가?
+        console.log( 10 < 20 && 10 > 5 );
+        // 2) 123의 일의 자릿수는 3인가?
+        console.log( 123 % 10 == 3 );
+        // 3) 5는 1보다 크거나 10보다 작은가?
+        console.log( 5 > 1 || 5 < 10 );
+        //3. 논리연산자(&& || !)를 이용하여 결과가 false가 되도록 하시오.
+        console.log( true && false || false && true);
+        //4. 연산자 우선순위를 소괄호로 조정하여 11이 출력되도록 하시오.
+        console.log( (10 - 4) / 2 + (4 * 2) );
+        //5. prompt함수로 백의 자리, 십의 자리, 일의 자리 숫자 3개를 입력받고
+        //  그 숫자를 조합하여 출력하시오.
+        // 예) 3입력 2입력 1입력 => 321 출력됨.
+        let num1 = prompt("100의 자리");
+        let num2 = prompt("10의 자리");
+        let num3 = prompt("1의 자리");
+        console.log("num1:"+num1);
+        console.log("num2:"+num2);
+        console.log("num3:"+num3);
+        console.log( num1 + num2 + num3 );
+        console.log( num1*100 + num2*10 + num3*1 );
+        console.log( Number(num1)*100 + Number(num2)*10 + Number(num3) );
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

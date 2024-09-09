@@ -3,55 +3,125 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>월별 계획 수량 및 실적 수량</title>
+    <title>DP BOM 내역별 평균 일정 지연</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <h1>월별 계획 수량 및 실적 수량</h1>
+    <h1>DP BOM 내역별 평균 일정 지연 (일)</h1>
+    <select id="yearSelect">
+      <!-- 연도 옵션 추가 -->
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+    <select id="lineSelect">
+      <!-- 호선 옵션 추가 -->
+      <option value="1">호선 1</option>
+      <option value="2">호선 2</option>
+      <option value="3">호선 3</option>
+    </select>
+    <button id="applyButton">적용</button>
     <canvas id="myChart" width="600" height="400"></canvas>
+    <p id="noDataMessage" style="display: none; color: red">
+      선택한 호선과 년도에 대한 데이터가 없습니다.
+    </p>
 
     <script>
-      // 서버에서 '/data' API를 통해 데이터 가져오기
-      fetch("http://localhost:3000/data")
-        .then((response) => response.json())
-        .then((data) => {
-          // 데이터 가공: 년도와 월을 기반으로 계획 수량과 실적 수량을 추출
-          const labels = data.map(
-            (item) => `${item.년도}-${item.월.toString().padStart(2, "0")}`
-          );
-          const planData = data.map((item) => item.총계획수량 || 0); // 기본값 추가
-          const actualData = data.map((item) => item.총실적수량 || 0); // 기본값 추가
+      let myChart = null; // 차트 인스턴스를 저장할 변수
 
-          // 그래프 그리기
-          drawChart(labels, planData, actualData);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
+      document
+        .getElementById("applyButton")
+        .addEventListener("click", function () {
+          const year = document.getElementById("yearSelect").value;
+          const line = document.getElementById("lineSelect").value;
+
+          fetch(`http://localhost:3000/data?year=${year}&line=${line}`)
+            .then((response) => {
+              if (response.status === 500) {
+                throw new Error("서버 오류");
+              } else if (response.status === 404) {
+                throw new Error("데이터를 찾을 수 없습니다.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (!Array.isArray(data)) {
+                throw new Error("Unexpected data format");
+              }
+
+              // 데이터가 없을 때 처리
+              const hasData = data.some((item) => item.DP_BOM_내역 !== "전체");
+
+              if (!hasData) {
+                document.getElementById("noDataMessage").style.display =
+                  "block";
+                if (myChart) {
+                  myChart.destroy();
+                }
+                return;
+              }
+
+              document.getElementById("noDataMessage").style.display = "none";
+
+              const labels = data.map((item) => item.DP_BOM_내역);
+              const counts = data.map((item) =>
+                Math.abs(parseFloat(item.평균_날짜차이))
+              ); // 평균 날짜 차이의 절대값
+
+              // 기준값 설정 (여기서는 전체 평균을 기준으로 설정)
+              const overallData = data.find(
+                (item) => item.DP_BOM_내역 === "전체"
+              );
+              const 기준값 = overallData
+                ? Math.abs(parseFloat(overallData.평균_날짜차이))
+                : 0;
+
+              drawChart(labels, counts, 기준값);
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+              alert("데이터를 가져오는 데 실패했습니다.");
+            });
         });
 
-      function drawChart(labels, planData, actualData) {
+      function drawChart(labels, counts, 기준값) {
         const ctx = document.getElementById("myChart").getContext("2d");
 
-        const myChart = new Chart(ctx, {
-          type: "line",
+        // 차트가 이미 존재하는 경우 삭제
+        if (myChart instanceof Chart) {
+          myChart.destroy();
+        }
+
+        myChart = new Chart(ctx, {
+          type: "bar",
           data: {
-            labels: labels, // 월별 레이블
+            labels: labels,
             datasets: [
               {
-                label: "계획 수량",
-                data: planData, // 계획 수량 데이터
-                borderColor: "rgba(54, 162, 235, 1)",
-                backgroundColor: "rgba(54, 162, 235, 0.2)",
-                fill: false, // 선 아래를 채우지 않음
-                tension: 0.1, // 선의 곡률 조정
+                label: "DP BOM 내역별 평균 일정 지연 (일)",
+                data: counts,
+                backgroundColor: counts.map((count) =>
+                  count > 기준값
+                    ? "rgba(255, 99, 132, 0.5)"
+                    : "rgba(54, 162, 235, 0.5)"
+                ),
+                borderColor: counts.map((count) =>
+                  count > 기준값
+                    ? "rgba(255, 99, 132, 1)"
+                    : "rgba(54, 162, 235, 1)"
+                ),
+                borderWidth: 1,
               },
               {
-                label: "실적 수량",
-                data: actualData, // 실적 수량 데이터
-                borderColor: "rgba(255, 99, 132, 1)",
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                fill: false, // 선 아래를 채우지 않음
-                tension: 0.1, // 선의 곡률 조정
+                label: "기준값 (전체 평균)",
+                type: "line",
+                data: new Array(labels.length).fill(기준값),
+                borderColor: "rgba(0, 0, 255, 1)",
+                borderWidth: 2,
+                fill: false,
+                pointRadius: 0,
+                borderDash: [5, 5],
               },
             ],
           },
@@ -59,18 +129,21 @@
             responsive: true,
             scales: {
               x: {
+                beginAtZero: true,
                 title: {
                   display: true,
-                  text: "월",
+                  text: "DP BOM 내역",
                 },
               },
               y: {
+                beginAtZero: true,
                 title: {
                   display: true,
-                  text: "수량",
+                  text: "평균 일정 지연 (일)",
                 },
                 ticks: {
                   beginAtZero: true,
+                  min: 0,
                 },
               },
             },
@@ -81,9 +154,9 @@
               tooltip: {
                 callbacks: {
                   label: function (tooltipItem) {
-                    const label = tooltipItem.dataset.label || "";
+                    const label = tooltipItem.label || "";
                     const value = tooltipItem.raw || 0;
-                    return `${label}: ${value} 개`;
+                    return `${label}: ${value} 일`;
                   },
                 },
               },

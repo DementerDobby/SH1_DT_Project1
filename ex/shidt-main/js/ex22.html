@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>switch 연습문제</title>
+    <script>
+        //연습문제
+        //1.
+        //1부터 12사이의 랜덤수(Month)를 발생시켜 출력하고,
+        //그 수가 3~5까지 "봄입니다." 
+        // 6~8이면 "여름입니다."
+        // 9~11이면 "가을입니다."
+        // 12,1,2이면 "겨울입니다."라고 출력하시오.
+        let month = Math.floor(Math.random()*12) + 1;//1~12
+        console.log("month:"+month);
+        switch(month){
+            case 3: case 4: case 5:
+                console.log("봄입니다.");
+                break;
+            case 6: case 7: case 8:
+                console.log("여름입니다.");
+                break;
+            case 9: case 10: case 11:
+                console.log("가을입니다.");
+                break;
+            case 12: case 1: case 2:
+                console.log("겨울입니다.");
+                break;
+        }
+        switch(true){
+            case month >=3 && month <= 5:
+                console.log("봄입니다.");
+                break;
+            case month >=6 && month <= 8:
+                console.log("여름입니다.");
+                break;
+        }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

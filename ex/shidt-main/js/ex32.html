@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>함수 function</title>
+    <script>
+        // 함수 : 코드들을 기능 단위로 묶어논 것
+        // 용도
+        // 1. 코드의 재사용 - 코드 중복 제거
+        // 2. 코드뭉치에 이름을 붙일 수 있다.
+
+        //함수의 4가지 형식
+        //1. 매개변수(입력값) X 반환값 X
+        //2. 매개변수(입력값) O 반환값 X
+        //3. 매개변수(입력값) X 반환값 O
+        //4. 매개변수(입력값) O 반환값 O
+
+        //return문 : 함수를 탈출(종료)
+        // return;
+        // return 10;
+
+        //break문 : 반복문을 탈출
+
+        //1. 매개변수(입력값) X 반환값 X
+        //선언부 - 호출하기 전까지 실행되지 않음.
+        function func1( ){
+            console.log("func1()함수 호출(실행)됨.");
+            return;
+        }
+        //호출부
+        func1();
+
+        //2. 매개변수(입력값) O 반환값 X
+        function func2( num ){
+            console.log("func2()호출됨.");
+            console.log("num:"+num);
+        }
+        func2( 10 );
+
+        //3. 매개변수(입력값) X 반환값 O
+        function func3( ) {
+            console.log("func3() 호출됨.");
+            return "hong";
+        }
+        let name = func3();
+        console.log( name );
+
+        //4. 매개변수(입력값) O 반환값 O
+        function func4( name ) {
+            if( name == 'hong' ){
+                return 'hong님 오심';
+            }
+            console.log("func4 호출됨.");
+            console.log( `name:${name}` );
+            return name+"님 환영합니다.";
+        }
+        let welcome = func4('hong');
+        console.log( welcome );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

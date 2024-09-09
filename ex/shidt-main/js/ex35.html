@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>타이머 관련 함수</title>
+    <script>
+        // setTimeout : 일정시간 후에 한번 호출
+        // setInterval : 일정시간 마다 주기적으로 호출
+
+        //param1 : 익명함수
+        //param2 : 정수(밀리초)
+        let timer = setTimeout( () => {
+            console.log("setTimer호출됨.");
+        }, 3000 ); //3000ms = 3sec
+
+        //타이머를 지울때
+        clearTimeout( timer );
+
+        //1초간격으로 수행되는 코드
+        let interval = setInterval( () => {
+            //console.log( Date() );
+            //HH:MM:SS
+            console.log( new Date().toTimeString().split(' ')[0] );
+            //YYYY-MM-DD
+            console.log( new Date().toISOString().split('T')[0] );
+         }, 1000 );
+
+         //인터벌을 지울때
+         clearInterval( interval );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

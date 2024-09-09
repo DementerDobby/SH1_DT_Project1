@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>반복문의 레이블 label</title>
+    <script>
+        //이중반복문에서 break문, continue문의 제어
+        loop1:
+        for(let i=0; i<5; i++){
+            loop2:
+            for(let j=0; j<5; j++){
+                if( j > 2 ){
+                    break loop1;
+                }
+                if( i > 3 ){
+                    continue loop1;
+                }
+            }
+        }
+        //5. 배열 사용, 로또번호 6개(1~45)를 추첨하되 
+        //  중복된 수를 추첨하면, 재추첨하는 로직을 넣으시오.
+        //  로또번호 6개를 출력하시오.
+        let lottoNums = [0,0,0,0,0,0];
+        loop1:
+        for(let i=0; i<6; i++){
+            let radomNum = parseInt( Math.random() * 45 + 1 ); //1~45 중의 임의의 수
+            console.log( radomNum );
+            loop2:
+            for(let j=0; j<i; j++){
+                if(lottoNums[j] == radomNum){
+                    console.log("재추첨!");
+                    i--;
+                    continue loop1;
+                }
+            }
+
+            lottoNums[i] = radomNum;
+        }
+        console.log( lottoNums );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

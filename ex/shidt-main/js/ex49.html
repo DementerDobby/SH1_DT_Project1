@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table태그에서 버튼 클릭 이벤트 처리</title>
+</head>
+<body>
+    <h2> 0번째 버튼 클릭됨.(value=0)</h2>
+    <table border="1">
+        <tr>
+            <th>제목1</th>
+            <th>제목2</th>
+        </tr>
+        <tr>
+            <td>목록1</td>
+            <td><button id="btn1" value="10" onclick="clickBtn(1);">버튼1</button></td>
+        </tr>
+        <tr>
+            <td>목록2</td>
+            <td><button id="btn2" value="20" onclick="clickBtn(2);">버튼2</button></td>
+        </tr>
+        <tr>
+            <td>목록2</td>
+            <td><button id="btn3" value="30" onclick="clickBtn(3);">버튼3</button></td>
+        </tr>
+    </table>
+    <script>
+        function clickBtn(index) {
+            let h2 = document.getElementsByTagName('h2');
+            
+            let button = document.getElementById('btn'+index);
+            let value = button.value;
+
+            h2[0].innerHTML = index + '번째 버튼 클릭됨(' +value+ ')';
+        }
+    </script>
+</body>
+</html>

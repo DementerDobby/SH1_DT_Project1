@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>부트스트랩5 Bootstrap 5</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <style>
+      div {
+        border: 2px solid #555;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 부트스트랩의 모든 속성은 클래스 예약어로 지정이 된다. -->
+    <!-- 화면 너비에 따른 중단점 -->
+    <!--            576px미만 576px이상 768px이상  992px이상 1200px이상 -->
+    <!--  중단점       xs       sm         md       lg           xl     -->
+
+    <!-- 12그리드 시스템을 사용함. -->
+    <!-- 내부적으로 flex을 기본으로 사용함. -->
+    <!-- 화면의 한줄을 12칸으로 구분한다. -->
+    <!-- class          col-12             : 1 100% -->
+    <!-- class     col-6        col-6      : 1 50%  1 50% -->
+    <!-- class     col-4    col-4    col-4 : 1 33.33% 1 33.33% 1 33.33% -->
+
+    <!-- container : 반응형으로 관리하는 부트스트랩 예약어 -->
+    <!--    : container : 화면너비가 중단점에 따라 나누어 떨어짐. -->
+    <!--    : container-fluid : 화면너비에 따라서 같이 커지거나 작아짐. -->
+    <!-- row : 12그리드에서 1행을 의미함. -->
+    <div class="container">
+      <div class="row">
+        <div class="col-12">col-12</div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- 12칸 100% 차지 -->
+        <div class="col-12">col-12</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!-- 50% 절반씩 차지 -->
+        <div class="col-6">col-6</div>
+        <div class="col-6">col-6</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!-- 33% 차지 -->
+        <div class="col-4">col-4</div>
+        <div class="col-4">col-4</div>
+        <div class="col-4">col-4</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-3">aside</div>
+        <div class="col-9">section</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!-- css : display: none; 영역은 없어짐 -->
+        <div class="col-6 d-none">박스1</div>
+        <div class="col-6">박스2</div>
+      </div>
+      <div class="row">
+        <!-- css : visibility: hidden; 영역은 그대로 -->
+        <div class="col-6 invisible">박스1</div>
+        <div class="col-6">박스2</div>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <h1 style="color: red">제목태그</h1>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

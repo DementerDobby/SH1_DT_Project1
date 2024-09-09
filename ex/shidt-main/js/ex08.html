@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>문자열형을 숫자형으로 타입변경하기</title>
+    <script>
+        //문자열형 => 숫자형으로  : Number(), parseInt(), parseFloat()
+        let myStr = '123';
+        let myNum = Number( myStr );
+        console.log( typeof(myNum) );
+        console.log( myNum * 2 );
+        console.log( myStr * 1 ); //추천하지 않음.
+        //string타입에 산술연산(+제외)하면 number타입으로 바뀜.
+
+        let myStr3 = '123.45';
+        let myNum3 = parseInt( myStr3 ); //소수점 날아가고 정수형으로 바뀜.
+        console.log( myNum3 );
+        let myNum4 = parseFloat( myStr3 );
+        console.log( myNum4 );
+
+        //숫자형 => 문자열형 변환  : String()
+        let myNum5 = 456;
+        let myStr5 = String( myNum5 );
+        console.log( typeof(myStr5) );
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

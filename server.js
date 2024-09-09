@@ -4,8 +4,10 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
+// CORS 설정
 app.use(cors());
 
+// 데이터베이스 연결
 const connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
@@ -13,21 +15,19 @@ const connection = mysql.createConnection({
   database: "sh1",
 });
 
+// 데이터 요청 처리
 app.get("/data", (req, res) => {
-  const query = `
-    SELECT
-      년도,
-      월,
-      총계획수량,
-      총실적수량
-    FROM
-      monthly_summary2
-    ORDER BY
-      년도,
-      월;
-  `;
+  const year = req.query.year || "2020"; // 기본값은 2020년
+  const line = req.query.line || "1"; // 기본값은 1호선
 
-  connection.query(query, (error, results) => {
+  const query = `
+  SELECT *
+  FROM sh1.line_four
+  WHERE \`DP_BOM_내역\` = '철의장'
+  LIMIT 10000;
+`;
+
+  connection.query(query, [year, line], (error, results) => {
     if (error) {
       console.error(error);
       res.status(500).json({ error: "Database query failed" });

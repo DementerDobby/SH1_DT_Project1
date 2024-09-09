@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시멘틱 태그 구조 잡기</title>
+    <style>
+      * {
+        border: 1px solid red;
+      }
+      section {
+        /* float 속성 : display:inline으로 변경하고 오른쪽으로 붙임. */
+        float: right;
+        width: 80%;
+      }
+      aside {
+        float: left;
+        width: 15%;
+      }
+      footer {
+        /* float 속성을 right/left 다 지움. */
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <header>헤더영역 타이틀</header>
+    <nav>
+      <ul>
+        <li><a href="http://www.naver.com">네이버</a></li>
+        <li><a href="http://www.google.com">구글</a></li>
+      </ul>
+    </nav>
+    <main>
+      <aside>
+        <ul>
+          <li><a href="">사이드메뉴1</a></li>
+          <li><a href="">사이드메뉴2</a></li>
+        </ul>
+      </aside>
+      <section>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
+          eos, magni facere aspernatur accusantium suscipit ipsam culpa
+          doloremque nam eligendi voluptatibus distinctio autem tempora? Tenetur
+          reiciendis ipsam officia exercitationem culpa.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
+          eos, magni facere aspernatur accusantium suscipit ipsam culpa
+          doloremque nam eligendi voluptatibus distinctio autem tempora? Tenetur
+          reiciendis ipsam officia exercitationem culpa.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
+          eos, magni facere aspernatur accusantium suscipit ipsam culpa
+          doloremque nam eligendi voluptatibus distinctio autem tempora? Tenetur
+          reiciendis ipsam officia exercitationem culpa.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>회사소개 및 주소</p>
+    </footer>
+  </body>
+</html>

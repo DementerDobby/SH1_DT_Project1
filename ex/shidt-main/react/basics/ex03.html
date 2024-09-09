@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>리액트 함수를 통해 html만들기</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+  </head>
+  <body>
+    <p>리액트 함수를 통해 html만들기</p>
+
+    <div id="root"></div>
+
+    <script>
+      // <h1 class="greeting">Hello World!</h1>
+
+      //형식 : createElement(type, props, ...chilren)
+      const elementH1 = React.createElement(
+        "h1", //리액트는 모든 종류의 html를 다 만들 수 있다.
+        { className: "greeting" },
+        "Hello World!"
+      );
+
+      //React 18버전부터는 root 엘리먼트에 render함수를 통해서 html을 구성한다.
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(elementH1);
+
+      //React 17버전까지는 아래와 같은 형식이었다.
+      //ReactDOM.render(elementH1, document.getElementById("root"));
+    </script>
+  </body>
+</html>
