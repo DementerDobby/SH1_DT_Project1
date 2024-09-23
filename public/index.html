@@ -3,167 +3,348 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DP BOM 내역별 평균 일정 지연</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+      // Datalabels 플러그인 등록
+      Chart.register(ChartDataLabels);
+    </script>
+
+    <style>
+      #chartContainer {
+        width: 1000px;
+        height: 800px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .chart-wrapper {
+        width: 48%;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      select,
+      button {
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>DP BOM 내역별 평균 일정 지연 (일)</h1>
-    <select id="yearSelect">
-      <!-- 연도 옵션 추가 -->
-      <option value="2020">2020</option>
-      <option value="2021">2021</option>
-      <option value="2022">2022</option>
-      <option value="2023">2023</option>
-    </select>
-    <select id="lineSelect">
-      <!-- 호선 옵션 추가 -->
-      <option value="1">호선 1</option>
-      <option value="2">호선 2</option>
-      <option value="3">호선 3</option>
-    </select>
-    <button id="applyButton">적용</button>
-    <canvas id="myChart" width="600" height="400"></canvas>
-    <p id="noDataMessage" style="display: none; color: red">
-      선택한 호선과 년도에 대한 데이터가 없습니다.
-    </p>
+    <h1>Progress Charts</h1>
+    <select id="yearSelect"></select>
+    <button onclick="loadCharts()">Load Charts</button>
+
+    <div id="chartContainer">
+      <div class="chart-wrapper">
+        <canvas id="registrationProgressChart"></canvas>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="projectProgressChart"></canvas>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="projectStatusChart"></canvas>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="projectCompletionChart"></canvas>
+      </div>
+    </div>
 
     <script>
-      let myChart = null; // 차트 인스턴스를 저장할 변수
+      const colors = [
+        "rgba(65, 90, 119, 0.8)",
+        "rgba(118, 107, 141, 0.8)",
+        "rgba(168, 218, 220, 0.8)",
+        "rgba(119, 141, 169, 0.8)",
+        "rgba(142, 202, 230, 0.8)",
+        "rgba(181, 131, 141, 0.8)",
+        "rgba(201, 203, 207, 0.8)",
+        "rgba(245, 198, 106, 0.8)",
+        "rgba(127, 167, 27, 0.8)",
+        "rgba(181, 126, 43, 0.8)",
+      ];
 
-      document
-        .getElementById("applyButton")
-        .addEventListener("click", function () {
-          const year = document.getElementById("yearSelect").value;
-          const line = document.getElementById("lineSelect").value;
+      let registrationChart;
+      let projectChart;
+      let projectStatusChart;
+      let projectCompletionChart;
 
-          fetch(`http://localhost:3000/data?year=${year}&line=${line}`)
-            .then((response) => {
-              if (response.status === 500) {
-                throw new Error("서버 오류");
-              } else if (response.status === 404) {
-                throw new Error("데이터를 찾을 수 없습니다.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (!Array.isArray(data)) {
-                throw new Error("Unexpected data format");
-              }
-
-              // 데이터가 없을 때 처리
-              const hasData = data.some((item) => item.DP_BOM_내역 !== "전체");
-
-              if (!hasData) {
-                document.getElementById("noDataMessage").style.display =
-                  "block";
-                if (myChart) {
-                  myChart.destroy();
-                }
-                return;
-              }
-
-              document.getElementById("noDataMessage").style.display = "none";
-
-              const labels = data.map((item) => item.DP_BOM_내역);
-              const counts = data.map((item) =>
-                Math.abs(parseFloat(item.평균_날짜차이))
-              ); // 평균 날짜 차이의 절대값
-
-              // 기준값 설정 (여기서는 전체 평균을 기준으로 설정)
-              const overallData = data.find(
-                (item) => item.DP_BOM_내역 === "전체"
-              );
-              const 기준값 = overallData
-                ? Math.abs(parseFloat(overallData.평균_날짜차이))
-                : 0;
-
-              drawChart(labels, counts, 기준값);
-            })
-            .catch((error) => {
-              console.error("Error fetching data:", error);
-              alert("데이터를 가져오는 데 실패했습니다.");
-            });
-        });
-
-      function drawChart(labels, counts, 기준값) {
-        const ctx = document.getElementById("myChart").getContext("2d");
-
-        // 차트가 이미 존재하는 경우 삭제
-        if (myChart instanceof Chart) {
-          myChart.destroy();
+      async function fetchYearOptions() {
+        try {
+          const response = await fetch("http://localhost:3000/years");
+          const years = await response.json();
+          const yearSelect = document.getElementById("yearSelect");
+          yearSelect.innerHTML = years
+            .map((year) => `<option value="${year}">${year}</option>`)
+            .join("");
+        } catch (error) {
+          console.error("Error fetching year options:", error);
         }
+      }
 
-        myChart = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: "DP BOM 내역별 평균 일정 지연 (일)",
-                data: counts,
-                backgroundColor: counts.map((count) =>
-                  count > 기준값
-                    ? "rgba(255, 99, 132, 0.5)"
-                    : "rgba(54, 162, 235, 0.5)"
-                ),
-                borderColor: counts.map((count) =>
-                  count > 기준값
-                    ? "rgba(255, 99, 132, 1)"
-                    : "rgba(54, 162, 235, 1)"
-                ),
-                borderWidth: 1,
-              },
-              {
-                label: "기준값 (전체 평균)",
-                type: "line",
-                data: new Array(labels.length).fill(기준값),
-                borderColor: "rgba(0, 0, 255, 1)",
-                borderWidth: 2,
-                fill: false,
-                pointRadius: 0,
-                borderDash: [5, 5],
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            scales: {
-              x: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "DP BOM 내역",
-                },
-              },
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "평균 일정 지연 (일)",
-                },
-                ticks: {
-                  beginAtZero: true,
-                  min: 0,
-                },
-              },
+      function processProjectStatusDataForPie(data) {
+        const statusCounts = data.reduce((acc, item) => {
+          acc[item.진행상태] = (acc[item.진행상태] || 0) + item.항목수;
+          return acc;
+        }, {});
+
+        const labels = Object.keys(statusCounts);
+        const values = Object.values(statusCounts);
+
+        return {
+          labels: labels,
+          datasets: [
+            {
+              label: "프로젝트 진행 상태",
+              data: values,
+              backgroundColor: labels.map(
+                (_, index) => colors[index % colors.length]
+              ),
+              borderColor: labels.map((_, index) =>
+                colors[index % colors.length].replace("0.8", "1")
+              ),
+              borderWidth: 1,
             },
-            plugins: {
-              legend: {
-                position: "top",
+          ],
+        };
+      }
+
+      async function loadCharts() {
+        try {
+          const year = document.getElementById("yearSelect").value;
+          if (!year) return;
+
+          const [
+            registrationData,
+            projectData,
+            projectStatusData,
+            projectCompletionData,
+          ] = await Promise.all([
+            fetch(
+              `http://localhost:3000/registrationProgress?year=${year}`
+            ).then((res) => res.json()),
+            fetch(`http://localhost:3000/projectProgress?year=${year}`).then(
+              (res) => res.json()
+            ),
+            fetch(`http://localhost:3000/projectStatus?year=${year}`).then(
+              (res) => res.json()
+            ),
+            fetch(`http://localhost:3000/projectCompletion?year=${year}`).then(
+              (res) => res.json()
+            ),
+          ]);
+
+          // 기존 차트 제거
+          if (registrationChart) registrationChart.destroy();
+          if (projectChart) projectChart.destroy();
+          if (projectStatusChart) projectStatusChart.destroy();
+          if (projectCompletionChart) projectCompletionChart.destroy();
+
+          // 등록구분별 진행률 차트
+          registrationChart = new Chart(
+            document.getElementById("registrationProgressChart"),
+            {
+              type: "bar",
+              data: {
+                labels: Array.from({ length: 12 }, (_, i) => `C${i + 1}`),
+                datasets: [
+                  {
+                    label: "등록구분별 건수",
+                    data: registrationData.values,
+                    backgroundColor: colors,
+                    borderColor: colors.map((color) =>
+                      color.replace("0.8", "1")
+                    ),
+                    borderWidth: 1,
+                  },
+                ],
               },
-              tooltip: {
-                callbacks: {
-                  label: function (tooltipItem) {
-                    const label = tooltipItem.label || "";
-                    const value = tooltipItem.raw || 0;
-                    return `${label}: ${value} 일`;
+              options: {
+                plugins: {
+                  datalabels: {
+                    color: "#000",
+                    formatter: (value) => `${value}건`,
+                    align: "center",
+                    anchor: "center",
+                    font: {
+                      weight: "bold",
+                      size: 12,
+                    },
+                  },
+                },
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "진행률 건수",
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: "등록구분",
+                    },
                   },
                 },
               },
-            },
-          },
-        });
+            }
+          );
+
+          // 프로젝트별 진행률 차트
+          projectChart = new Chart(
+            document.getElementById("projectProgressChart"),
+            {
+              type: "bar",
+              data: {
+                labels: projectData.labels,
+                datasets: [
+                  {
+                    label: "프로젝트별 건수",
+                    data: projectData.values,
+                    backgroundColor: colors,
+                    borderColor: colors.map((color) =>
+                      color.replace("0.8", "1")
+                    ),
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  datalabels: {
+                    color: "#000",
+                    formatter: (value) => `${value}건`,
+                    align: "center",
+                    anchor: "center",
+                    font: {
+                      weight: "bold",
+                      size: 12,
+                    },
+                  },
+                },
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "진행률 건수",
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: "프로젝트",
+                    },
+                  },
+                },
+              },
+            }
+          );
+
+          // 프로젝트 진행 상태 차트 (도넛 차트)
+          const processedProjectStatusDataForPie =
+            processProjectStatusDataForPie(projectStatusData);
+
+          projectStatusChart = new Chart(
+            document.getElementById("projectStatusChart"),
+            {
+              type: "doughnut",
+              data: processedProjectStatusDataForPie,
+              options: {
+                plugins: {
+                  datalabels: {
+                    color: "#000",
+                    formatter: (value, context) => {
+                      const label =
+                        context.chart.data.labels[context.dataIndex];
+                      const originalValue =
+                        processedProjectStatusDataForPie.datasets[0].data[
+                          context.dataIndex
+                        ];
+                      return `${originalValue}건`;
+                    },
+                    align: "center",
+                    anchor: "center",
+                    font: {
+                      weight: "bold",
+                      size: 12,
+                    },
+                  },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+              },
+            }
+          );
+
+          // 프로젝트 완료율 차트
+          projectCompletionChart = new Chart(
+            document.getElementById("projectCompletionChart"),
+            {
+              type: "bar",
+              data: {
+                labels: projectCompletionData.map((item) => item.프로젝트),
+                datasets: [
+                  {
+                    label: "프로젝트 완료율",
+                    data: projectCompletionData.map((item) => item.진행률),
+                    backgroundColor: colors,
+                    borderColor: colors.map((color) =>
+                      color.replace("0.8", "1")
+                    ),
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                plugins: {
+                  datalabels: {
+                    color: "#000",
+                    formatter: (value) => `${value}%`,
+                    align: "center",
+                    anchor: "center",
+                    font: {
+                      weight: "bold",
+                      size: 12,
+                    },
+                  },
+                },
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "완료율 (%)",
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: "프로젝트",
+                    },
+                  },
+                },
+              },
+            }
+          );
+        } catch (error) {
+          console.error("Error loading charts:", error);
+        }
       }
+
+      fetchYearOptions();
     </script>
   </body>
 </html>
